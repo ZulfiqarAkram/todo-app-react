@@ -10,6 +10,7 @@ class AddItem extends Component {
     super();
     this.handleNewItemOnChange = this.handleNewItemOnChange.bind(this);
     this.handleAddItem = this.handleAddItem.bind(this);
+    this.handleRemoveItem = this.handleRemoveItem.bind(this);
   }
 
   handleAddItem = e => {
@@ -23,6 +24,13 @@ class AddItem extends Component {
 
   handleNewItemOnChange(e) {
     this.setState({ newItem: e.target.value });
+  }
+
+  handleRemoveItem(index) {
+    console.log("handleRemoveItem", index);
+    const todoItems = [...this.state.todoItems];
+    todoItems.splice(index, 1);
+    this.setState({ todoItems: todoItems });
   }
 
   render() {
@@ -53,14 +61,14 @@ class AddItem extends Component {
         </form>
         <br />
         <ul class="list-group list-group-flush">
-          {this.state.todoItems.map(t => (
-            <li class="list-group-item" key={t}>
-              {t}
-              <button className="btn btn-danger btn-sm m-2 float-right">
-                Delete
-              </button>
-              <button className="btn btn-info btn-sm m-2 float-right">
-                Edit
+          {this.state.todoItems.map((item, index) => (
+            <li class="list-group-item" key={index}>
+              {item}
+              <button
+                onClick={() => this.handleRemoveItem(index)}
+                className="btn btn-danger btn-sm m-2 float-right"
+              >
+                Remove
               </button>
             </li>
           ))}
